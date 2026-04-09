@@ -9,7 +9,7 @@ import { closeSession, registerSession } from '../session/lifecycle';
 import { getProvider } from '../providers/registry';
 import { coerceBoolean } from '../utils/zod-helpers';
 
-const platformEnum = z.enum(['browser', 'ios', 'android']);
+const platformEnum = z.enum(['browser', 'iOS', 'Android']);
 const browserEnum = z.enum(['chrome', 'firefox', 'edge', 'safari']);
 const automationEnum = z.enum(['XCUITest', 'UiAutomator2']);
 
@@ -64,7 +64,7 @@ export const startSessionToolDefinition: ToolDefinition = {
 
 type StartSessionArgs = {
   provider?: 'local' | 'browserstack';
-  platform: 'browser' | 'ios' | 'android';
+  platform: 'browser' | 'iOS' | 'Android';
   browser?: 'chrome' | 'firefox' | 'edge' | 'safari';
   browserVersion?: string;
   os?: string;
