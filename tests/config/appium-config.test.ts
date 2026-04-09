@@ -25,6 +25,12 @@ describe('buildAndroidCapabilities', () => {
     expect(caps['appium:autoDismissAlerts']).toBe(true);
     expect(caps['appium:autoAcceptAlerts']).toBeUndefined();
   });
+
+  it('includes language and locale when provided', () => {
+    const caps = buildAndroidCapabilities('/app.apk', { ...defaultOptions, language: 'ko', locale: 'KR' });
+    expect(caps['appium:language']).toBe('ko');
+    expect(caps['appium:locale']).toBe('KR');
+  });
 });
 
 describe('buildIOSCapabilities', () => {
@@ -38,5 +44,11 @@ describe('buildIOSCapabilities', () => {
   it('includes autoGrantPermissions: true by default when param is undefined', () => {
     const caps = buildIOSCapabilities('/app.app', defaultOptions);
     expect(caps['appium:autoGrantPermissions']).toBe(true);
+  });
+
+  it('includes language and locale when provided', () => {
+    const caps = buildIOSCapabilities('/app.app', { ...defaultOptions, language: 'en', locale: 'US' });
+    expect(caps['appium:language']).toBe('en');
+    expect(caps['appium:locale']).toBe('US');
   });
 });

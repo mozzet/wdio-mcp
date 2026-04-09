@@ -19,6 +19,8 @@ export interface IOSCapabilityOptions {
   noReset?: boolean;
   fullReset?: boolean;
   newCommandTimeout?: number;
+  language?: string;
+  locale?: string;
 
   [key: string]: any;
 }
@@ -34,6 +36,8 @@ export interface AndroidCapabilityOptions {
   noReset?: boolean;
   fullReset?: boolean;
   newCommandTimeout?: number;
+  language?: string;
+  locale?: string;
 
   [key: string]: any;
 }
@@ -86,6 +90,13 @@ export function buildIOSCapabilities(
     capabilities['appium:newCommandTimeout'] = options.newCommandTimeout;
   }
 
+  if (options.language) {
+    capabilities['appium:language'] = options.language;
+  }
+  if (options.locale) {
+    capabilities['appium:locale'] = options.locale;
+  }
+
   capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? true;
   capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? true;
 
@@ -97,7 +108,7 @@ export function buildIOSCapabilities(
   // Add any additional custom options
   for (const [key, value] of Object.entries(options)) {
     if (
-      !['deviceName', 'platformVersion', 'automationName', 'autoGrantPermissions', 'autoAcceptAlerts', 'autoDismissAlerts', 'udid', 'noReset', 'fullReset', 'newCommandTimeout'].includes(
+      !['deviceName', 'platformVersion', 'automationName', 'autoGrantPermissions', 'autoAcceptAlerts', 'autoDismissAlerts', 'udid', 'noReset', 'fullReset', 'newCommandTimeout', 'language', 'locale'].includes(
         key,
       )
     ) {
@@ -140,6 +151,13 @@ export function buildAndroidCapabilities(
     capabilities['appium:newCommandTimeout'] = options.newCommandTimeout;
   }
 
+  if (options.language) {
+    capabilities['appium:language'] = options.language;
+  }
+  if (options.locale) {
+    capabilities['appium:locale'] = options.locale;
+  }
+
   // Optional Android-specific settings
   capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? true;
   capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? true;
@@ -156,7 +174,7 @@ export function buildAndroidCapabilities(
   // Add any additional custom options
   for (const [key, value] of Object.entries(options)) {
     if (
-      !['deviceName', 'platformVersion', 'automationName', 'autoGrantPermissions', 'autoAcceptAlerts', 'autoDismissAlerts', 'appWaitActivity', 'noReset', 'fullReset', 'newCommandTimeout'].includes(
+      !['deviceName', 'platformVersion', 'automationName', 'autoGrantPermissions', 'autoAcceptAlerts', 'autoDismissAlerts', 'appWaitActivity', 'noReset', 'fullReset', 'newCommandTimeout', 'language', 'locale'].includes(
         key,
       )
     ) {

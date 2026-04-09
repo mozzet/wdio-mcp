@@ -41,6 +41,8 @@ export const startSessionToolDefinition: ToolDefinition = {
     autoDismissAlerts: coerceBoolean.optional().describe('Auto-dismiss alerts (default: false)'),
     appWaitActivity: z.string().optional().describe('Activity to wait for on Android launch'),
     udid: z.string().optional().describe('Unique Device Identifier for iOS real device'),
+    language: z.string().optional().describe('Language for the session (e.g. "en", "ko")'),
+    locale: z.string().optional().describe('Locale for the session (e.g. "US", "KR")'),
     noReset: coerceBoolean.optional().describe('Preserve app data between sessions'),
     fullReset: coerceBoolean.optional().describe('Uninstall app before/after session'),
     newCommandTimeout: z.number().min(0).optional().default(300).describe('Appium command timeout in seconds'),
@@ -81,6 +83,8 @@ type StartSessionArgs = {
   autoDismissAlerts?: boolean;
   appWaitActivity?: string;
   udid?: string;
+  language?: string;
+  locale?: string;
   noReset?: boolean;
   fullReset?: boolean;
   newCommandTimeout?: number;
