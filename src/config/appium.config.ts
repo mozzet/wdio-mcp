@@ -97,8 +97,8 @@ export function buildIOSCapabilities(
     capabilities['appium:locale'] = options.locale;
   }
 
-  capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? true;
-  capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? true;
+  capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? false;
+  capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? false;
 
   if (options.autoDismissAlerts !== undefined) {
     capabilities['appium:autoDismissAlerts'] = options.autoDismissAlerts;
@@ -159,8 +159,8 @@ export function buildAndroidCapabilities(
   }
 
   // Optional Android-specific settings
-  capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? true;
-  capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? true;
+  capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? false;
+  capabilities['appium:autoAcceptAlerts'] = options.autoAcceptAlerts ?? false;
 
   if (options.autoDismissAlerts !== undefined) {
     capabilities['appium:autoDismissAlerts'] = options.autoDismissAlerts;

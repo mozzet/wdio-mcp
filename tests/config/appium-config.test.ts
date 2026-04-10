@@ -5,19 +5,19 @@ describe('buildAndroidCapabilities', () => {
   // Simulate how app-session.tool.ts calls this — all params destructured, unset ones are undefined
   const defaultOptions = { deviceName: 'emulator-5554', autoAcceptAlerts: undefined, autoDismissAlerts: undefined, autoGrantPermissions: undefined };
 
-  it('includes autoAcceptAlerts: true by default when param is undefined', () => {
+  it('includes autoAcceptAlerts: false by default when param is undefined', () => {
     const caps = buildAndroidCapabilities('/app.apk', defaultOptions);
-    expect(caps['appium:autoAcceptAlerts']).toBe(true);
-  });
-
-  it('includes autoGrantPermissions: true by default when param is undefined', () => {
-    const caps = buildAndroidCapabilities('/app.apk', defaultOptions);
-    expect(caps['appium:autoGrantPermissions']).toBe(true);
-  });
-
-  it('respects explicit autoAcceptAlerts: false', () => {
-    const caps = buildAndroidCapabilities('/app.apk', { ...defaultOptions, autoAcceptAlerts: false });
     expect(caps['appium:autoAcceptAlerts']).toBe(false);
+  });
+
+  it('includes autoGrantPermissions: false by default when param is undefined', () => {
+    const caps = buildAndroidCapabilities('/app.apk', defaultOptions);
+    expect(caps['appium:autoGrantPermissions']).toBe(false);
+  });
+
+  it('respects explicit autoAcceptAlerts: true', () => {
+    const caps = buildAndroidCapabilities('/app.apk', { ...defaultOptions, autoAcceptAlerts: true });
+    expect(caps['appium:autoAcceptAlerts']).toBe(true);
   });
 
   it('sets autoDismissAlerts and clears autoAcceptAlerts when autoDismissAlerts is set', () => {
@@ -36,14 +36,14 @@ describe('buildAndroidCapabilities', () => {
 describe('buildIOSCapabilities', () => {
   const defaultOptions = { deviceName: 'iPhone 15', autoAcceptAlerts: undefined, autoDismissAlerts: undefined, autoGrantPermissions: undefined };
 
-  it('includes autoAcceptAlerts: true by default when param is undefined', () => {
+  it('includes autoAcceptAlerts: false by default when param is undefined', () => {
     const caps = buildIOSCapabilities('/app.app', defaultOptions);
-    expect(caps['appium:autoAcceptAlerts']).toBe(true);
+    expect(caps['appium:autoAcceptAlerts']).toBe(false);
   });
 
-  it('includes autoGrantPermissions: true by default when param is undefined', () => {
+  it('includes autoGrantPermissions: false by default when param is undefined', () => {
     const caps = buildIOSCapabilities('/app.app', defaultOptions);
-    expect(caps['appium:autoGrantPermissions']).toBe(true);
+    expect(caps['appium:autoGrantPermissions']).toBe(false);
   });
 
   it('includes language and locale when provided', () => {

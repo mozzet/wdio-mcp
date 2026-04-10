@@ -67,8 +67,8 @@ export class BrowserStackProvider implements SessionProvider {
     return {
       platformName: platform,
       'appium:app': options.app,
-      'appium:autoGrantPermissions': (options.autoGrantPermissions as boolean | undefined) ?? true,
-      'appium:autoAcceptAlerts': autoDismissAlerts ? undefined : (autoAcceptAlerts ?? true),
+      'appium:autoGrantPermissions': (options.autoGrantPermissions as boolean | undefined) ?? false,
+      'appium:autoAcceptAlerts': autoDismissAlerts ? undefined : (autoAcceptAlerts ?? false),
       'appium:autoDismissAlerts': autoDismissAlerts,
       'appium:newCommandTimeout': (options.newCommandTimeout as number | undefined) ?? 300,
       'bstack:options': bstackOptions,

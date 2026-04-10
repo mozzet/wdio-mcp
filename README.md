@@ -705,8 +705,8 @@ This is particularly useful when:
 
 Both iOS and Android sessions now support automatic handling of system permissions and alerts:
 
-- `autoGrantPermissions` (default: true): Automatically grants app permissions (camera, location, etc.)
-- `autoAcceptAlerts` (default: true): Automatically accepts system alerts and dialogs
+- `autoGrantPermissions` (default: false): Automatically grants app permissions (camera, location, etc.)
+- `autoAcceptAlerts` (default: false): Automatically accepts system alerts and dialogs
 - `autoDismissAlerts` (optional): Set to true to dismiss alerts instead of accepting them
 
 This eliminates the need to manually handle permission popups during automated testing.
