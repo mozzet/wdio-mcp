@@ -9,6 +9,7 @@ import { navigateTool, navigateToolDefinition } from './tools/navigate.tool';
 import { clickTool, clickToolDefinition } from './tools/click.tool';
 import { setValueTool, setValueToolDefinition } from './tools/set-value.tool';
 import { scrollTool, scrollToolDefinition } from './tools/scroll.tool';
+import { takeScreenshotTool, takeScreenshotToolDefinition } from './tools/take-screenshot.tool';
 import {
   deleteCookiesTool,
   deleteCookiesToolDefinition,
@@ -124,6 +125,8 @@ registerTool(scrollToolDefinition, withRecording('scroll', scrollTool));
 
 registerTool(clickToolDefinition, withRecording('click_element', clickTool));
 registerTool(setValueToolDefinition, withRecording('set_value', setValueTool));
+
+registerTool(takeScreenshotToolDefinition, takeScreenshotTool);
 
 registerTool(setCookieToolDefinition, setCookieTool);
 registerTool(deleteCookiesToolDefinition, deleteCookiesTool);
