@@ -134,6 +134,7 @@ function transformElement(
     clickable: attrs.clickable === 'true' || attrs.accessible === 'true' || attrs['long-clickable'] === 'true',
     enabled: attrs.enabled !== 'false',
     displayed: ctx.platform === 'android' ? attrs.displayed !== 'false' : attrs.visible !== 'false',
+    checked: ctx.platform === 'android' ? attrs.checked === 'true' : attrs.selected === 'true',
     bounds,
     isInViewport: isWithinViewport(bounds, ctx.viewportSize),
   };

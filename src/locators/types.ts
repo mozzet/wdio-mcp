@@ -13,6 +13,7 @@ export interface ElementAttributes {
   'long-clickable'?: string;
   focusable?: string;
   checkable?: string;
+  checked?: string;
   scrollable?: string;
   enabled?: string;
   displayed?: string;
@@ -93,6 +94,7 @@ export interface ElementWithLocators {
   clickable: boolean;
   enabled: boolean;
   displayed: boolean;
+  checked: boolean;
   bounds: Bounds;
   isInViewport: boolean;
 }

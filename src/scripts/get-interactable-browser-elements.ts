@@ -14,6 +14,7 @@ export interface BrowserElementInfo {
   href: string;
   selector: string;
   isInViewport: boolean;
+  isChecked?: boolean;
   boundingBox?: { x: number; y: number; width: number; height: number };
 }
 
@@ -205,6 +206,12 @@ const elementsScript = (includeBounds: boolean) => (function () {
       selector: getSelector(htmlEl),
       isInViewport,
     };
+
+    if (htmlEl.tagName.toLowerCase() === 'input' && (entry.type === 'checkbox' || entry.type === 'radio')) {
+      entry.isChecked = (htmlEl as HTMLInputElement).checked;
+    } else if (htmlEl.getAttribute('aria-checked')) {
+      entry.isChecked = htmlEl.getAttribute('aria-checked') === 'true';
+    }
 
     if (includeBounds) {
       entry.boundingBox = {

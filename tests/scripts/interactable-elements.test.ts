@@ -62,6 +62,30 @@ describe('field values', () => {
     expect(el).toHaveProperty('isInViewport');
   });
 
+  it('populates isChecked for checked checkboxes', async () => {
+    document.body.innerHTML = '<input type="checkbox" checked>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('populates isChecked for checked radio buttons', async () => {
+    document.body.innerHTML = '<input type="radio" checked>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('populates isChecked for aria-checked elements', async () => {
+    document.body.innerHTML = '<div role="checkbox" aria-checked="true">Checked</div>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('sets isChecked to false for unchecked elements', async () => {
+    document.body.innerHTML = '<input type="checkbox">';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(false);
+  });
+
   it('populates href for links', async () => {
     document.body.innerHTML = '<a href="/about">About</a>';
     const elements = await getInteractableBrowserElements(mockBrowser);
