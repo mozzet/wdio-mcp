@@ -42,7 +42,7 @@ export const startSessionToolDefinition: ToolDefinition = {
     appWaitActivity: z.string().optional().describe('Activity to wait for on Android launch'),
     udid: z.string().optional().describe('Unique Device Identifier for iOS real device'),
     language: z.string().optional().describe('Language for the session (e.g. "en", "ko"). Must be 2 or 3 lowercase letters.'),
-    locale: z.string().optional().describe('Locale for the session. Android: 2 uppercase letters (e.g. "US", "KR"). iOS: {lang}-{country} (e.g. "en-US", "ko-KR").'),
+    locale: z.string().optional().describe('Locale for the session. Android: 2 uppercase letters (e.g. "US", "KR"). iOS: {lang}_{country} (e.g. "en_US", "ko_KR").'),
     noReset: coerceBoolean.optional().describe('Preserve app data between sessions'),
     fullReset: coerceBoolean.optional().describe('Uninstall app before/after session'),
     newCommandTimeout: z.number().min(0).optional().default(300).describe('Appium command timeout in seconds'),
@@ -272,7 +272,7 @@ async function startMobileSession(args: StartSessionArgs): Promise<CallToolResul
       };
     }
   } else if (platform === 'iOS') {
-    if (locale && !/^[a-z]{2,3}-[A-Z]{2}$/.test(locale)) {
+    if (locale && !/^[a-z]{2,3}_[A-Z]{2}$/.test(locale)) {
       return {
         isError: true,
         content: [{

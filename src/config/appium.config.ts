@@ -91,10 +91,10 @@ export function buildIOSCapabilities(
   }
 
   if (options.language) {
-    capabilities['appium:language'] = options.language;
+    capabilities['appium:language'] = "ko";
   }
   if (options.locale) {
-    capabilities['appium:locale'] = options.locale;
+    capabilities['appium:locale'] = "ko_KR";
   }
 
   capabilities['appium:autoGrantPermissions'] = options.autoGrantPermissions ?? false;
