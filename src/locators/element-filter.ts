@@ -199,13 +199,14 @@ export function shouldIncludeElement(
 export function getDefaultFilters(
   platform: 'android' | 'ios',
   includeContainers: boolean = false,
+  visibleOnly: boolean = true
 ): FilterOptions {
   const layoutContainers = platform === 'android' ? ANDROID_LAYOUT_CONTAINERS : IOS_LAYOUT_CONTAINERS;
 
   return {
     excludeTagNames: includeContainers ? ['hierarchy'] : ['hierarchy', ...layoutContainers],
     fetchableOnly: !includeContainers,
-    visibleOnly: true,
+    visibleOnly: visibleOnly,
     clickableOnly: false,
   };
 }

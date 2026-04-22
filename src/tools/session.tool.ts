@@ -272,7 +272,7 @@ async function startMobileSession(args: StartSessionArgs): Promise<CallToolResul
       };
     }
   } else if (platform === 'iOS') {
-    if (locale && !/^[a-z]{2,3}_[A-Z]{2}$/.test(locale)) {
+    if (locale && !/^[a-z]{2,3}-[A-Z]{2}$/.test(locale)) {
       return {
         isError: true,
         content: [{
@@ -285,6 +285,7 @@ async function startMobileSession(args: StartSessionArgs): Promise<CallToolResul
 
   if (!appPath && !app && noReset !== true) {
     return {
+      isError: true,
       content: [{
         type: 'text',
         text: 'Error: Either "appPath" must be provided to install an app, or "noReset: true" must be set to connect to an already-running app.',

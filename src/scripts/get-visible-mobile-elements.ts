@@ -31,6 +31,7 @@ export interface MobileElementInfo {
 export interface GetMobileElementsOptions {
   includeContainers?: boolean;
   includeBounds?: boolean;
+  visibleOnly?: boolean;
   filterOptions?: FilterOptions;
 }
 
@@ -129,13 +130,13 @@ export async function getMobileVisibleElements(
   platform: 'ios' | 'android',
   options: GetMobileElementsOptions = {},
 ): Promise<MobileElementInfo[]> {
-  const { includeContainers = false, includeBounds = false, filterOptions } = options;
+  const { includeContainers = false, includeBounds = false, visibleOnly, filterOptions } = options;
 
   const viewportSize = await getViewportSize(browser);
   const pageSource = await browser.getPageSource();
 
   const filters: FilterOptions = {
-    ...getDefaultFilters(platform, includeContainers),
+    ...getDefaultFilters(platform, includeContainers, visibleOnly),
     ...filterOptions,
   };
 

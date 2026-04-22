@@ -32,11 +32,19 @@ describe('element detection', () => {
     expect(elements).toHaveLength(0);
   });
 
-  it('does not return invisible elements', async () => {
+  it('does not return invisible elements by default', async () => {
     HTMLElement.prototype.checkVisibility = () => false;
     document.body.innerHTML = '<button>Hidden</button>';
     const elements = await getInteractableBrowserElements(mockBrowser);
     expect(elements).toHaveLength(0);
+  });
+
+  it('returns invisible elements when visibleOnly is false', async () => {
+    HTMLElement.prototype.checkVisibility = () => false;
+    document.body.innerHTML = '<button>Hidden</button>';
+    const elements = await getInteractableBrowserElements(mockBrowser, { visibleOnly: false });
+    expect(elements).toHaveLength(1);
+    expect(elements[0].tagName).toBe('button');
   });
 
   it('deduplicates elements matched by multiple selectors', async () => {
