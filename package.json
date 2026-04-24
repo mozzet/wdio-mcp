@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/webdriverio/mcp.git"
   },
-  "version": "3.2.4",
+  "version": "3.3.0",
   "description": "MCP server with WebdriverIO for browser and mobile app automation (iOS/Android via Appium)",
   "main": "./lib/server.js",
   "module": "./lib/server.js",
@@ -39,7 +39,9 @@
     "postbundle": "npm pack",
     "lint": "eslint src/ tests/ --fix && tsc --noEmit",
     "start": "node lib/server.js",
+    "start:http": "node lib/server.js --http --allowedOrigins http://localhost:8080",
     "dev": "tsx --watch src/server.ts",
+    "dev:http": "tsx --watch src/server.ts --http --allowedOrigins http://localhost:8080",
     "prepare": "husky",
     "test": "vitest run"
   },
