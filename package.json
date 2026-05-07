@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/webdriverio/mcp.git"
   },
-  "version": "3.3.0",
+  "version": "3.4.4",
   "description": "MCP server with WebdriverIO for browser and mobile app automation (iOS/Android via Appium)",
   "main": "./lib/server.js",
   "module": "./lib/server.js",
@@ -49,7 +49,7 @@
     "@modelcontextprotocol/sdk": "^1.27.1",
     "@toon-format/toon": "^2.1.0",
     "@wdio/protocols": "^9.27.0",
-    "@xmldom/xmldom": "^0.8.12",
+    "@xmldom/xmldom": "^0.9.10",
     "browserstack-local": "^1.5.12",
     "puppeteer-core": "^24.40.0",
     "sharp": "^0.34.5",
@@ -76,7 +76,15 @@
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "overrides": {
-      "release-it>undici": "^6.24.0"
+      "release-it>undici": "^6.24.0",
+      "basic-ftp": "^5.3.1",
+      "lodash": "^4.18.1",
+      "hono": "^4.12.17",
+      "@hono/node-server": "^1.19.14",
+      "fast-xml-parser": "^5.7.3",
+      "defu": "^6.1.7",
+      "vitest>vite": "^7.3.2",
+      "ip-address": "^10.1.1"
     }
   }
 }

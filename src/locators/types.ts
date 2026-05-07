@@ -2,6 +2,9 @@
  * Type definitions for mobile element locator generation
  */
 
+import type { Document as XMLDocument, Node as XMLNode } from '@xmldom/xmldom';
+export type { XMLDocument, XMLNode };
+
 export interface ElementAttributes {
   // Android attributes
   'resource-id'?: string;
@@ -77,7 +80,7 @@ export type LocatorStrategy =
 
 export interface LocatorContext {
   sourceXML: string;
-  parsedDOM: Document | null;
+  parsedDOM: XMLDocument | null;
   isAndroid: boolean;
 }
 

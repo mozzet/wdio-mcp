@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.4.4](https://github.com/webdriverio/mcp/compare/v3.4.3...v3.4.4) (2026-05-06)
+
+## [3.4.3](https://github.com/webdriverio/mcp/compare/v3.4.2...v3.4.3) (2026-05-06)
+
+### Bug Fixes
+
+* **xmldom:** Fix type errors by importing XMLDocument, XMLElement, XMLNode from @xmldom/xmldom ([c11c204](https://github.com/webdriverio/mcp/commit/c11c20441f7ce9ec09c54d3b07cdc7dd8ef29b71))
+
+## [3.4.2](https://github.com/webdriverio/mcp/compare/v3.4.1...v3.4.2) (2026-05-06)
+
+## [3.4.1](https://github.com/webdriverio/mcp/compare/v3.4.0...v3.4.1) (2026-04-30)
+
+### Refactoring
+
+* Add annotation support for tools to enhance metadata usage ([c196da2](https://github.com/webdriverio/mcp/commit/c196da2c9c0c197fbe43196b721633e5a741ea3a))
+
+## [3.4.0](https://github.com/webdriverio/mcp/compare/v3.3.0...v3.4.0) (2026-04-27)
+
+### Features
+
+* add switch_frame tool for iframe navigation ([ae867a5](https://github.com/webdriverio/mcp/commit/ae867a5988171289095b9591e0d3eea87ffe28a0))
+
+### Bug Fixes
+
+* Include `protocol` in appium configuration for local provider ([e1596df](https://github.com/webdriverio/mcp/commit/e1596df5a12ff8c89e486fb24983b5a9a6f94c15))
+
 ## [3.3.0](https://github.com/webdriverio/mcp/compare/v3.2.5...v3.3.0) (2026-04-23)
 
 ### Features
