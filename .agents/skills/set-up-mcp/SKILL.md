@@ -31,23 +31,6 @@ You can override these values by passing options to the script:
 - `--command`: Define a custom executor (e.g., `npm`, `node`, `pnpm`).
 - `--args`: Pass a comma-separated list of arguments.
 
-#### Examples
-
-1. **Standard `npm run --silent start` configuration (Recommended):**
-   ```bash
-   node .agents/skills/set-up-mcp/scripts/setup.cjs
-   ```
-
-2. **Custom startup arguments (e.g., using `npm -y start` or direct node execution):**
-   ```bash
-   node .agents/skills/set-up-mcp/scripts/setup.cjs --command npm --args "-y,start"
-   ```
-
-3. **Direct execution of the built Javascript server:**
-   ```bash
-   node .agents/skills/set-up-mcp/scripts/setup.cjs --command node --args "lib/server.js"
-   ```
-
 ## Manual Configuration
 
 If you prefer to configure the server manually, follow these steps:
