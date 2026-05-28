@@ -19,6 +19,7 @@ export interface MobileElementInfo {
   resourceId: string;
   accessibilityId: string;
   isEnabled: boolean;
+  isChecked?: boolean;
   altSelector: string; // Single alternative selector (flattened for tabular format)
   // Only present when includeBounds=true
   bounds?: { x: number; y: number; width: number; height: number };
@@ -30,6 +31,7 @@ export interface MobileElementInfo {
 export interface GetMobileElementsOptions {
   includeContainers?: boolean;
   includeBounds?: boolean;
+  visibleOnly?: boolean;
   filterOptions?: FilterOptions;
 }
 
@@ -94,6 +96,7 @@ function toMobileElementInfo(element: ElementWithLocators, includeBounds: boolea
     resourceId: element.resourceId || '',
     accessibilityId: accessId || '',
     isEnabled: element.enabled !== false,
+    isChecked: element.checked,
     altSelector: selectedLocators[1] || '', // Single alternative (flattened for tabular)
   };
 
@@ -127,13 +130,13 @@ export async function getMobileVisibleElements(
   platform: 'ios' | 'android',
   options: GetMobileElementsOptions = {},
 ): Promise<MobileElementInfo[]> {
-  const { includeContainers = false, includeBounds = false, filterOptions } = options;
+  const { includeContainers = false, includeBounds = false, visibleOnly, filterOptions } = options;
 
   const viewportSize = await getViewportSize(browser);
   const pageSource = await browser.getPageSource();
 
   const filters: FilterOptions = {
-    ...getDefaultFilters(platform, includeContainers),
+    ...getDefaultFilters(platform, includeContainers, visibleOnly),
     ...filterOptions,
   };
 

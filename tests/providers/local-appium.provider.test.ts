@@ -21,6 +21,17 @@ describe('LocalAppiumProvider', () => {
     expect(caps.platformName).toBe('Android');
   });
 
+  it('includes language and locale in capabilities', () => {
+    const caps = localAppiumProvider.buildCapabilities({
+      platform: 'Android',
+      deviceName: 'Pixel 7',
+      language: 'ko',
+      locale: 'KR',
+    });
+    expect(caps['appium:language']).toBe('ko');
+    expect(caps['appium:locale']).toBe('KR');
+  });
+
   it('getSessionType returns ios for iOS', () => {
     expect(localAppiumProvider.getSessionType({ platform: 'iOS' })).toBe('ios');
   });

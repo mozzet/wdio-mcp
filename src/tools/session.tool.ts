@@ -10,7 +10,7 @@ import { getProvider } from '../providers/registry';
 import { coerceBoolean } from '../utils/zod-helpers';
 import { startTrace, recordInitialNavigation } from '../trace/recorder.js';
 
-const platformEnum = z.enum(['browser', 'ios', 'android']);
+const platformEnum = z.enum(['browser', 'iOS', 'Android']);
 const browserEnum = z.enum(['chrome', 'firefox', 'edge', 'safari']);
 const automationEnum = z.enum(['XCUITest', 'UiAutomator2']);
 
@@ -38,11 +38,13 @@ export const startSessionToolDefinition: ToolDefinition = {
     platformVersion: z.string().optional().describe('OS version (e.g., "17.0", "14")'),
     appPath: z.string().optional().describe('Path to app file (.app/.apk/.ipa)'),
     automationName: automationEnum.optional().describe('Automation driver'),
-    autoGrantPermissions: coerceBoolean.optional().describe('Auto-grant app permissions (default: true)'),
-    autoAcceptAlerts: coerceBoolean.optional().describe('Auto-accept alerts (default: true)'),
+    autoGrantPermissions: coerceBoolean.optional().describe('Auto-grant app permissions (default: false)'),
+    autoAcceptAlerts: coerceBoolean.optional().describe('Auto-accept alerts (default: false)'),
     autoDismissAlerts: coerceBoolean.optional().describe('Auto-dismiss alerts (default: false)'),
     appWaitActivity: z.string().optional().describe('Activity to wait for on Android launch'),
     udid: z.string().optional().describe('Unique Device Identifier for iOS real device'),
+    language: z.string().optional().describe('Language for the session (e.g. "en", "ko"). Must be 2 or 3 lowercase letters.'),
+    locale: z.string().optional().describe('Locale for the session. Android: 2 uppercase letters (e.g. "US", "KR"). iOS: {lang}_{country} (e.g. "en_US", "ko_KR").'),
     noReset: coerceBoolean.optional().describe('Preserve app data between sessions'),
     fullReset: coerceBoolean.optional().describe('Uninstall app before/after session'),
     newCommandTimeout: z.number().min(0).optional().default(300).describe('Appium command timeout in seconds'),
@@ -66,7 +68,7 @@ export const startSessionToolDefinition: ToolDefinition = {
 
 type StartSessionArgs = {
   provider?: 'local' | 'browserstack';
-  platform: 'browser' | 'ios' | 'android';
+  platform: 'browser' | 'iOS' | 'Android';
   browser?: 'chrome' | 'firefox' | 'edge' | 'safari';
   browserVersion?: string;
   os?: string;
@@ -85,6 +87,8 @@ type StartSessionArgs = {
   autoDismissAlerts?: boolean;
   appWaitActivity?: string;
   udid?: string;
+  language?: string;
+  locale?: string;
   noReset?: boolean;
   fullReset?: boolean;
   newCommandTimeout?: number;
@@ -249,10 +253,53 @@ async function startBrowserSession(args: StartSessionArgs): Promise<CallToolResu
 }
 
 async function startMobileSession(args: StartSessionArgs): Promise<CallToolResult> {
-  const { platform, appPath, app, deviceName, noReset } = args;
+  const { platform, appPath, app, deviceName, noReset, language, locale } = args;
+
+  // Validate language and locale
+  if (language && !/^[a-z]{2,3}$/.test(language)) {
+    return {
+      isError: true,
+      content: [{
+        type: 'text',
+        text: 'Error: language must be a 2 or 3-letter lowercase code (e.g., "ko", "en", "jpn").',
+      }],
+    };
+  }
+
+  if (platform === 'Android') {
+    if ((language && !locale) || (!language && locale)) {
+      return {
+        isError: true,
+        content: [{
+          type: 'text',
+          text: 'Error: For Android, both language and locale must be provided together, or neither.',
+        }],
+      };
+    }
+    if (locale && !/^[A-Z]{2}$/.test(locale)) {
+      return {
+        isError: true,
+        content: [{
+          type: 'text',
+          text: 'Error: For Android, locale must be a 2-letter uppercase country code (e.g., "KR", "US").',
+        }],
+      };
+    }
+  } else if (platform === 'iOS') {
+    if (locale && !/^[a-z]{2,3}-[A-Z]{2}$/.test(locale)) {
+      return {
+        isError: true,
+        content: [{
+          type: 'text',
+          text: 'Error: For iOS, locale must be in the format {lang}-{country} (e.g., "en-US", "ko-KR").',
+        }],
+      };
+    }
+  }
 
   if (!appPath && !app && noReset !== true) {
     return {
+      isError: true,
       content: [{
         type: 'text',
         text: 'Error: Either "appPath" must be provided to install an app, or "noReset: true" must be set to connect to an already-running app.',

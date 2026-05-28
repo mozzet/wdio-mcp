@@ -13,6 +13,8 @@ export type LocalAppiumOptions = {
   autoDismissAlerts?: boolean;
   appWaitActivity?: string;
   udid?: string;
+  language?: string;
+  locale?: string;
   noReset?: boolean;
   fullReset?: boolean;
   newCommandTimeout?: number;
@@ -45,6 +47,8 @@ export class LocalAppiumProvider implements SessionProvider {
     const fullReset = options.fullReset as boolean | undefined;
     const newCommandTimeout = options.newCommandTimeout as number | undefined;
     const appWaitActivity = options.appWaitActivity as string | undefined;
+    const language = options.language as string | undefined;
+    const locale = options.locale as string | undefined;
     const userCapabilities = (options.capabilities as Record<string, unknown> | undefined) ?? {};
 
     const capabilities: Record<string, any> = platform === 'iOS'
@@ -59,6 +63,8 @@ export class LocalAppiumProvider implements SessionProvider {
         noReset,
         fullReset,
         newCommandTimeout,
+        language,
+        locale,
       })
       : buildAndroidCapabilities(appPath, {
         deviceName,
@@ -71,6 +77,8 @@ export class LocalAppiumProvider implements SessionProvider {
         noReset,
         fullReset,
         newCommandTimeout,
+        language,
+        locale,
       });
 
     const mergedCapabilities = {

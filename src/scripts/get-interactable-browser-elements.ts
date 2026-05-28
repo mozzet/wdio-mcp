@@ -14,14 +14,17 @@ export interface BrowserElementInfo {
   href: string;
   selector: string;
   isInViewport: boolean;
+  isChecked?: boolean;
   boundingBox?: { x: number; y: number; width: number; height: number };
 }
 
 export interface GetBrowserElementsOptions {
   includeBounds?: boolean;
+  visibleOnly?: boolean;
 }
 
-const elementsScript = (includeBounds: boolean) => (function () {
+const elementsScript = (params: { includeBounds: boolean; visibleOnly: boolean }) => (function () {
+  const { includeBounds, visibleOnly } = params;
   const interactableSelectors = [
     'a[href]',
     'button',
@@ -185,7 +188,7 @@ const elementsScript = (includeBounds: boolean) => (function () {
     seen.add(el);
 
     const htmlEl = el as HTMLElement;
-    if (!isVisible(htmlEl)) return;
+    if (visibleOnly && !isVisible(htmlEl)) return;
 
     const inputEl = htmlEl as HTMLInputElement;
     const rect = htmlEl.getBoundingClientRect();
@@ -205,6 +208,12 @@ const elementsScript = (includeBounds: boolean) => (function () {
       selector: getSelector(htmlEl),
       isInViewport,
     };
+
+    if (htmlEl.tagName.toLowerCase() === 'input' && (entry.type === 'checkbox' || entry.type === 'radio')) {
+      entry.isChecked = (htmlEl as HTMLInputElement).checked;
+    } else if (htmlEl.getAttribute('aria-checked')) {
+      entry.isChecked = htmlEl.getAttribute('aria-checked') === 'true';
+    }
 
     if (includeBounds) {
       entry.boundingBox = {
@@ -228,8 +237,8 @@ export async function getInteractableBrowserElements(
   browser: WebdriverIO.Browser,
   options: GetBrowserElementsOptions = {},
 ): Promise<BrowserElementInfo[]> {
-  const { includeBounds = false } = options;
-  return (browser as any).execute(elementsScript, includeBounds) as unknown as Promise<BrowserElementInfo[]>;
+  const { includeBounds = false, visibleOnly = true } = options;
+  return (browser as any).execute(elementsScript, { includeBounds, visibleOnly }) as unknown as Promise<BrowserElementInfo[]>;
 }
 
 export default elementsScript;

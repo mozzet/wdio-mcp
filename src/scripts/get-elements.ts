@@ -14,6 +14,7 @@ export async function getElements(
     inViewportOnly?: boolean;
     includeContainers?: boolean;
     includeBounds?: boolean;
+    visibleOnly?: boolean;
     limit?: number;
     offset?: number;
   },
@@ -22,6 +23,7 @@ export async function getElements(
     inViewportOnly = true,
     includeContainers = false,
     includeBounds = false,
+    visibleOnly = true,
     limit = 0,
     offset = 0,
   } = params;
@@ -30,9 +32,9 @@ export async function getElements(
 
   if (browser.isAndroid || browser.isIOS) {
     const platform = browser.isAndroid ? 'android' : 'ios';
-    elements = await getMobileVisibleElements(browser, platform, { includeContainers, includeBounds });
+    elements = await getMobileVisibleElements(browser, platform, { includeContainers, includeBounds, visibleOnly });
   } else {
-    elements = await getInteractableBrowserElements(browser, { includeBounds });
+    elements = await getInteractableBrowserElements(browser, { includeBounds, visibleOnly });
   }
 
   if (inViewportOnly) {

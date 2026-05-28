@@ -13,6 +13,7 @@ import { navigateTool, navigateToolDefinition } from './tools/navigate.tool';
 import { clickTool, clickToolDefinition } from './tools/click.tool';
 import { setValueTool, setValueToolDefinition } from './tools/set-value.tool';
 import { scrollTool, scrollToolDefinition } from './tools/scroll.tool';
+import { takeScreenshotTool, takeScreenshotToolDefinition } from './tools/take-screenshot.tool';
 import {
   deleteCookiesTool,
   deleteCookiesToolDefinition,
@@ -137,6 +138,8 @@ function createServer(): McpServer {
 
   registerTool(clickToolDefinition, instrument('click_element', clickTool));
   registerTool(setValueToolDefinition, instrument('set_value', setValueTool));
+
+  registerTool(takeScreenshotToolDefinition, takeScreenshotTool);
 
   registerTool(setCookieToolDefinition, setCookieTool);
   registerTool(deleteCookiesToolDefinition, deleteCookiesTool);

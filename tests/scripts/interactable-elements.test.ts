@@ -32,11 +32,19 @@ describe('element detection', () => {
     expect(elements).toHaveLength(0);
   });
 
-  it('does not return invisible elements', async () => {
+  it('does not return invisible elements by default', async () => {
     HTMLElement.prototype.checkVisibility = () => false;
     document.body.innerHTML = '<button>Hidden</button>';
     const elements = await getInteractableBrowserElements(mockBrowser);
     expect(elements).toHaveLength(0);
+  });
+
+  it('returns invisible elements when visibleOnly is false', async () => {
+    HTMLElement.prototype.checkVisibility = () => false;
+    document.body.innerHTML = '<button>Hidden</button>';
+    const elements = await getInteractableBrowserElements(mockBrowser, { visibleOnly: false });
+    expect(elements).toHaveLength(1);
+    expect(elements[0].tagName).toBe('button');
   });
 
   it('deduplicates elements matched by multiple selectors', async () => {
@@ -60,6 +68,30 @@ describe('field values', () => {
     expect(el).toHaveProperty('href');
     expect(el).toHaveProperty('selector');
     expect(el).toHaveProperty('isInViewport');
+  });
+
+  it('populates isChecked for checked checkboxes', async () => {
+    document.body.innerHTML = '<input type="checkbox" checked>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('populates isChecked for checked radio buttons', async () => {
+    document.body.innerHTML = '<input type="radio" checked>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('populates isChecked for aria-checked elements', async () => {
+    document.body.innerHTML = '<div role="checkbox" aria-checked="true">Checked</div>';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(true);
+  });
+
+  it('sets isChecked to false for unchecked elements', async () => {
+    document.body.innerHTML = '<input type="checkbox">';
+    const elements = await getInteractableBrowserElements(mockBrowser);
+    expect(elements[0].isChecked).toBe(false);
   });
 
   it('populates href for links', async () => {

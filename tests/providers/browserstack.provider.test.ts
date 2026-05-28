@@ -146,14 +146,14 @@ describe('BrowserStackProvider', () => {
       expect(bstack.appiumVersion).toBe('3.1.0');
     });
 
-    it('defaults autoGrantPermissions and autoAcceptAlerts to true', () => {
+    it('defaults autoGrantPermissions and autoAcceptAlerts to false', () => {
       const caps = provider.buildCapabilities({
         platform: 'android',
         deviceName: 'Pixel 7',
         app: 'bs://abc',
       });
-      expect(caps['appium:autoGrantPermissions']).toBe(true);
-      expect(caps['appium:autoAcceptAlerts']).toBe(true);
+      expect(caps['appium:autoGrantPermissions']).toBe(false);
+      expect(caps['appium:autoAcceptAlerts']).toBe(false);
     });
 
     it('clears autoAcceptAlerts when autoDismissAlerts is set', () => {
