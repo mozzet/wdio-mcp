@@ -12,3 +12,7 @@ settings.local.json
 
 .mcp.json
 .env
+
+.antigravitycli/
+
+.DS_Store
